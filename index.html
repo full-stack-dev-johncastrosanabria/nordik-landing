@@ -47,7 +47,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     /* Reveal-on-scroll: solo se oculta si el JS marca el elemento con .pre.
-       Sin JS (o si falla), nada lleva .pre y todo el contenido es visible. */
+       Sin JS (o si falla), nada lleva .pre y todo el contenido es visible.
+       Definimos el keyframe aquí (no en tailwind.config): Tailwind solo
+       generaría @keyframes fade-up si se usara la clase `animate-fade-up`,
+       y aquí lo invocamos por CSS, así que debe existir sí o sí. */
+    @keyframes fade-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
     .reveal.pre { opacity: 0; }
     .reveal.pre.in-view { animation: fade-up .6s ease forwards; }
     [data-delay="1"] { animation-delay: .08s; }
