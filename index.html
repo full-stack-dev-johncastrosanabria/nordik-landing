@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NÓRDIK — Ropa minimalista de algodón orgánico</title>
+  <meta name="description" content="Camisetas de algodón orgánico con durabilidad extrema y diseño minimalista. Menos, pero mejor." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { ink: '#0f0f0f', sand: '#f5f3ef', stone: '#e7e3da' },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body class="font-sans bg-white text-ink antialiased">
+
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-stone">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#" class="text-xl font-extrabold tracking-tight">NÓRDIK</a>
+      <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-600">
+        <li><a href="#beneficios" class="hover:text-ink transition">Beneficios</a></li>
+        <li><a href="#catalogo" class="hover:text-ink transition">Catálogo</a></li>
+        <li><a href="#opiniones" class="hover:text-ink transition">Opiniones</a></li>
+      </ul>
+      <a href="#catalogo" class="text-sm font-semibold bg-ink text-white px-5 py-2.5 rounded-full hover:bg-neutral-800 transition">Comprar</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="max-w-6xl mx-auto px-6 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <span class="inline-block text-xs font-semibold uppercase tracking-widest text-neutral-500 mb-4">100% Algodón orgánico</span>
+        <h1 class="text-4xl md:text-6xl font-extrabold leading-[1.05] tracking-tight">Menos prendas.<br>Mejores prendas.</h1>
+        <p class="mt-6 text-lg text-neutral-600 max-w-md">Camisetas diseñadas para durar años, no temporadas. Diseño minimalista, tacto suave y resistencia extrema.</p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a href="#catalogo" class="bg-ink text-white px-8 py-4 rounded-full font-semibold hover:bg-neutral-800 transition">Comprar ahora</a>
+          <a href="#beneficios" class="px-8 py-4 rounded-full font-semibold border border-stone hover:bg-sand transition">Ver beneficios</a>
+        </div>
+        <p class="mt-6 text-sm text-neutral-500">★★★★★ <span class="font-medium text-ink">4.9/5</span> · +2.300 clientes</p>
+      </div>
+      <div class="relative">
+        <div class="aspect-[4/5] rounded-3xl bg-stone overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80" alt="Camiseta minimalista NÓRDIK" class="w-full h-full object-cover" />
+        </div>
+        <div class="absolute -bottom-5 -left-5 bg-white shadow-xl rounded-2xl px-5 py-4 hidden sm:block">
+          <p class="text-2xl font-extrabold">5 años</p>
+          <p class="text-xs text-neutral-500">de garantía real</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- BENEFICIOS -->
+    <section id="beneficios" class="bg-sand py-20">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-14">Por qué NÓRDIK</h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8" id="benefits-grid"></div>
+      </div>
+    </section>
+
+    <!-- CATÁLOGO -->
+    <section id="catalogo" class="py-20">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="flex items-end justify-between mb-12">
+          <h2 class="text-3xl md:text-4xl font-extrabold">El catálogo</h2>
+          <p class="text-neutral-500 hidden sm:block">Envío gratis desde 50€</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8" id="catalog-grid"></div>
+      </div>
+    </section>
+
+    <!-- PRUEBA SOCIAL -->
+    <section id="opiniones" class="bg-ink text-white py-24">
+      <div class="max-w-3xl mx-auto px-6 text-center">
+        <p class="text-yellow-400 text-lg mb-6">★★★★★</p>
+        <blockquote class="text-2xl md:text-3xl font-medium leading-snug">"Tres años usándola cada semana y sigue como nueva. Nunca volveré a comprar camisetas baratas."</blockquote>
+        <div class="mt-8">
+          <p class="font-semibold">Laura Méndez</p>
+          <p class="text-neutral-400 text-sm">Cliente verificada · Madrid</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="py-20 text-center px-6">
+      <h2 class="text-3xl md:text-4xl font-extrabold">Invierte en lo que dura</h2>
+      <p class="mt-4 text-neutral-600 max-w-md mx-auto">Empieza con una. Entenderás la diferencia desde el primer día.</p>
+      <a href="#catalogo" class="inline-block mt-8 bg-ink text-white px-10 py-4 rounded-full font-semibold hover:bg-neutral-800 transition">Comprar ahora</a>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-stone py-12">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-8">
+      <div>
+        <p class="text-xl font-extrabold">NÓRDIK</p>
+        <p class="text-sm text-neutral-500 mt-2 max-w-xs">Ropa minimalista de algodón orgánico. Hecha para durar.</p>
+      </div>
+      <div class="flex gap-12 text-sm">
+        <ul class="space-y-2 text-neutral-600">
+          <li class="font-semibold text-ink">Tienda</li>
+          <li><a href="#catalogo" class="hover:text-ink">Catálogo</a></li>
+          <li><a href="#beneficios" class="hover:text-ink">Beneficios</a></li>
+        </ul>
+        <ul class="space-y-2 text-neutral-600">
+          <li class="font-semibold text-ink">Soporte</li>
+          <li><a href="#" class="hover:text-ink">Envíos</a></li>
+          <li><a href="#" class="hover:text-ink">Contacto</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="text-center text-xs text-neutral-400 mt-10">© 2026 NÓRDIK. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    // Datos centralizados (DRY) — fáciles de mover a un componente React/props.
+    const benefits = [
+      { icon: '🛡️', title: 'Durabilidad extrema', text: 'Costuras reforzadas y algodón de fibra larga que resiste +200 lavados.' },
+      { icon: '✨', title: 'Diseño minimalista', text: 'Cortes atemporales que combinan con todo. Sin logos, sin ruido.' },
+      { icon: '🌿', title: 'Algodón orgánico', text: 'Certificado GOTS. Suave con tu piel y con el planeta.' },
+      { icon: '⚡', title: 'Fácil de usar', text: 'No encoge, no destiñe. Lavar, secar y listo para años.' },
+    ];
+
+    const products = [
+      { name: 'Esencial Blanca', price: '29€', img: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=600&q=80' },
+      { name: 'Esencial Negra', price: '29€', img: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=600&q=80' },
+      { name: 'Arena Tierra', price: '32€', img: 'https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=600&q=80' },
+      { name: 'Gris Piedra', price: '32€', img: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=600&q=80' },
+    ];
+
+    document.getElementById('benefits-grid').innerHTML = benefits.map(b => `
+      <div class="bg-white rounded-2xl p-7 border border-stone">
+        <div class="text-3xl mb-4">${b.icon}</div>
+        <h3 class="font-bold text-lg mb-2">${b.title}</h3>
+        <p class="text-neutral-600 text-sm leading-relaxed">${b.text}</p>
+      </div>`).join('');
+
+    document.getElementById('catalog-grid').innerHTML = products.map(p => `
+      <div class="group">
+        <div class="aspect-[4/5] rounded-2xl bg-stone overflow-hidden mb-4">
+          <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="font-semibold">${p.name}</h3>
+            <p class="text-neutral-500 text-sm">${p.price}</p>
+          </div>
+          <button class="bg-ink text-white text-sm px-4 py-2 rounded-full hover:bg-neutral-800 transition" onclick="alert('Añadido: ${p.name}')">Comprar</button>
+        </div>
+      </div>`).join('');
+  </script>
+</body>
+</html>
