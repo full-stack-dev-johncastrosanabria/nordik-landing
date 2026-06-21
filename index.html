@@ -11,33 +11,71 @@
       theme: {
         extend: {
           colors: { ink: '#0f0f0f', sand: '#f5f3ef', stone: '#e7e3da' },
-          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          keyframes: {
+            'fade-up': { '0%': { opacity: 0, transform: 'translateY(24px)' }, '100%': { opacity: 1, transform: 'translateY(0)' } },
+            'marquee': { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-50%)' } },
+          },
+          animation: { 'fade-up': 'fade-up .6s ease forwards', 'marquee': 'marquee 22s linear infinite' },
         }
       }
     }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* Reveal-on-scroll: oculto hasta que IntersectionObserver añade .in-view */
+    .reveal { opacity: 0; }
+    .reveal.in-view { animation: fade-up .6s ease forwards; }
+    [data-delay="1"] { animation-delay: .08s; }
+    [data-delay="2"] { animation-delay: .16s; }
+    [data-delay="3"] { animation-delay: .24s; }
+  </style>
 </head>
 <body class="font-sans bg-white text-ink antialiased">
 
+  <!-- BARRA DE ANUNCIO -->
+  <div class="bg-ink text-white text-xs md:text-sm text-center py-2 px-4 font-medium">
+    Envío gratis desde 50€ · Devoluciones en 30 días · 5 años de garantía
+  </div>
+
   <!-- NAVBAR -->
-  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-stone">
+  <header class="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-stone">
     <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
       <a href="#" class="text-xl font-extrabold tracking-tight">NÓRDIK</a>
       <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-600">
         <li><a href="#beneficios" class="hover:text-ink transition">Beneficios</a></li>
         <li><a href="#catalogo" class="hover:text-ink transition">Catálogo</a></li>
         <li><a href="#opiniones" class="hover:text-ink transition">Opiniones</a></li>
+        <li><a href="#faq" class="hover:text-ink transition">FAQ</a></li>
       </ul>
-      <a href="#catalogo" class="text-sm font-semibold bg-ink text-white px-5 py-2.5 rounded-full hover:bg-neutral-800 transition">Comprar</a>
+      <div class="flex items-center gap-2">
+        <!-- Botón carrito -->
+        <button onclick="Cart.open()" class="relative p-2.5 rounded-full hover:bg-sand transition" aria-label="Abrir carrito">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.5l1.5 12.75h12l1.5-9H6M9 21a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm9 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"/></svg>
+          <span id="cart-count" class="absolute -top-0.5 -right-0.5 bg-ink text-white text-[10px] font-bold w-5 h-5 rounded-full grid place-items-center scale-0 transition-transform">0</span>
+        </button>
+        <!-- Hamburguesa móvil -->
+        <button onclick="toggleMenu()" class="md:hidden p-2.5 rounded-full hover:bg-sand transition" aria-label="Menú">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5"/></svg>
+        </button>
+      </div>
     </nav>
+    <!-- Menú móvil desplegable -->
+    <div id="mobile-menu" class="md:hidden hidden border-t border-stone bg-white">
+      <ul class="px-6 py-4 space-y-3 text-sm font-medium text-neutral-700">
+        <li><a href="#beneficios" onclick="toggleMenu()" class="block">Beneficios</a></li>
+        <li><a href="#catalogo" onclick="toggleMenu()" class="block">Catálogo</a></li>
+        <li><a href="#opiniones" onclick="toggleMenu()" class="block">Opiniones</a></li>
+        <li><a href="#faq" onclick="toggleMenu()" class="block">FAQ</a></li>
+      </ul>
+    </div>
   </header>
 
   <main>
     <!-- HERO -->
     <section class="max-w-6xl mx-auto px-6 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center">
-      <div>
+      <div class="reveal">
         <span class="inline-block text-xs font-semibold uppercase tracking-widest text-neutral-500 mb-4">100% Algodón orgánico</span>
         <h1 class="text-4xl md:text-6xl font-extrabold leading-[1.05] tracking-tight">Menos prendas.<br>Mejores prendas.</h1>
         <p class="mt-6 text-lg text-neutral-600 max-w-md">Camisetas diseñadas para durar años, no temporadas. Diseño minimalista, tacto suave y resistencia extrema.</p>
@@ -47,7 +85,7 @@
         </div>
         <p class="mt-6 text-sm text-neutral-500">★★★★★ <span class="font-medium text-ink">4.9/5</span> · +2.300 clientes</p>
       </div>
-      <div class="relative">
+      <div class="relative reveal" data-delay="1">
         <div class="aspect-[4/5] rounded-3xl bg-stone overflow-hidden">
           <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80" alt="Camiseta minimalista NÓRDIK" class="w-full h-full object-cover" />
         </div>
@@ -58,10 +96,19 @@
       </div>
     </section>
 
+    <!-- MARQUEE DE CONFIANZA -->
+    <section class="border-y border-stone bg-sand py-4 overflow-hidden">
+      <div class="flex gap-12 w-max animate-marquee text-sm font-medium text-neutral-500 whitespace-nowrap">
+        <!-- Duplicado para loop continuo -->
+        <span>★ Certificado GOTS</span><span>★ Envío en 24-48h</span><span>★ +200 lavados garantizados</span><span>★ Carbono neutral</span><span>★ Hecho en Europa</span>
+        <span>★ Certificado GOTS</span><span>★ Envío en 24-48h</span><span>★ +200 lavados garantizados</span><span>★ Carbono neutral</span><span>★ Hecho en Europa</span>
+      </div>
+    </section>
+
     <!-- BENEFICIOS -->
     <section id="beneficios" class="bg-sand py-20">
       <div class="max-w-6xl mx-auto px-6">
-        <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-14">Por qué NÓRDIK</h2>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-14 reveal">Por qué NÓRDIK</h2>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8" id="benefits-grid"></div>
       </div>
     </section>
@@ -70,8 +117,8 @@
     <section id="catalogo" class="py-20">
       <div class="max-w-6xl mx-auto px-6">
         <div class="flex items-end justify-between mb-12">
-          <h2 class="text-3xl md:text-4xl font-extrabold">El catálogo</h2>
-          <p class="text-neutral-500 hidden sm:block">Envío gratis desde 50€</p>
+          <h2 class="text-3xl md:text-4xl font-extrabold reveal">El catálogo</h2>
+          <p class="text-neutral-500 hidden sm:block reveal">Envío gratis desde 50€</p>
         </div>
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8" id="catalog-grid"></div>
       </div>
@@ -79,7 +126,7 @@
 
     <!-- PRUEBA SOCIAL -->
     <section id="opiniones" class="bg-ink text-white py-24">
-      <div class="max-w-3xl mx-auto px-6 text-center">
+      <div class="max-w-3xl mx-auto px-6 text-center reveal">
         <p class="text-yellow-400 text-lg mb-6">★★★★★</p>
         <blockquote class="text-2xl md:text-3xl font-medium leading-snug">"Tres años usándola cada semana y sigue como nueva. Nunca volveré a comprar camisetas baratas."</blockquote>
         <div class="mt-8">
@@ -89,11 +136,22 @@
       </div>
     </section>
 
-    <!-- CTA FINAL -->
-    <section class="py-20 text-center px-6">
-      <h2 class="text-3xl md:text-4xl font-extrabold">Invierte en lo que dura</h2>
-      <p class="mt-4 text-neutral-600 max-w-md mx-auto">Empieza con una. Entenderás la diferencia desde el primer día.</p>
-      <a href="#catalogo" class="inline-block mt-8 bg-ink text-white px-10 py-4 rounded-full font-semibold hover:bg-neutral-800 transition">Comprar ahora</a>
+    <!-- FAQ -->
+    <section id="faq" class="py-20">
+      <div class="max-w-3xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-12 reveal">Preguntas frecuentes</h2>
+        <div id="faq-list" class="divide-y divide-stone border-y border-stone"></div>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER / CTA FINAL -->
+    <section class="py-20 text-center px-6 bg-sand">
+      <h2 class="text-3xl md:text-4xl font-extrabold reveal">Invierte en lo que dura</h2>
+      <p class="mt-4 text-neutral-600 max-w-md mx-auto reveal">Suscríbete y recibe un 10% en tu primera compra.</p>
+      <form onsubmit="subscribe(event)" class="mt-8 flex flex-col sm:flex-row gap-3 max-w-md mx-auto reveal">
+        <input type="email" required placeholder="tu@email.com" class="flex-1 px-5 py-4 rounded-full border border-stone bg-white outline-none focus:border-ink transition" />
+        <button class="bg-ink text-white px-8 py-4 rounded-full font-semibold hover:bg-neutral-800 transition">Quiero mi 10%</button>
+      </form>
     </section>
   </main>
 
@@ -112,7 +170,7 @@
         </ul>
         <ul class="space-y-2 text-neutral-600">
           <li class="font-semibold text-ink">Soporte</li>
-          <li><a href="#" class="hover:text-ink">Envíos</a></li>
+          <li><a href="#faq" class="hover:text-ink">FAQ</a></li>
           <li><a href="#" class="hover:text-ink">Contacto</a></li>
         </ul>
       </div>
@@ -120,8 +178,38 @@
     <p class="text-center text-xs text-neutral-400 mt-10">© 2026 NÓRDIK. Todos los derechos reservados.</p>
   </footer>
 
+  <!-- BOTÓN VOLVER ARRIBA -->
+  <button id="to-top" onclick="scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-6 right-6 z-30 bg-ink text-white w-11 h-11 rounded-full grid place-items-center shadow-lg opacity-0 pointer-events-none transition" aria-label="Volver arriba">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 15l7-7 7 7"/></svg>
+  </button>
+
+  <!-- DRAWER DEL CARRITO -->
+  <div id="cart-overlay" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/40" onclick="Cart.close()"></div>
+    <aside class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col translate-x-full transition-transform duration-300" id="cart-panel">
+      <div class="flex items-center justify-between p-6 border-b border-stone">
+        <h3 class="font-extrabold text-lg">Tu carrito</h3>
+        <button onclick="Cart.close()" class="p-2 rounded-full hover:bg-sand transition" aria-label="Cerrar">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
+      <div class="p-6 border-t border-stone">
+        <div class="flex justify-between font-semibold mb-4">
+          <span>Total</span><span id="cart-total">0€</span>
+        </div>
+        <button onclick="Cart.checkout()" class="w-full bg-ink text-white py-4 rounded-full font-semibold hover:bg-neutral-800 transition">Finalizar compra</button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- TOASTS -->
+  <div id="toasts" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] space-y-2 w-max max-w-[90vw]"></div>
+
   <script>
-    // Datos centralizados (DRY) — fáciles de mover a un componente React/props.
+    /* ----------------------------------------------------------------
+       Datos centralizados (DRY). Migran 1:1 a props de componentes React.
+    ---------------------------------------------------------------- */
     const benefits = [
       { icon: '🛡️', title: 'Durabilidad extrema', text: 'Costuras reforzadas y algodón de fibra larga que resiste +200 lavados.' },
       { icon: '✨', title: 'Diseño minimalista', text: 'Cortes atemporales que combinan con todo. Sin logos, sin ruido.' },
@@ -130,32 +218,140 @@
     ];
 
     const products = [
-      { name: 'Esencial Blanca', price: '29€', img: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=600&q=80' },
-      { name: 'Esencial Negra', price: '29€', img: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=600&q=80' },
-      { name: 'Arena Tierra', price: '32€', img: 'https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=600&q=80' },
-      { name: 'Gris Piedra', price: '32€', img: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=600&q=80' },
+      { id: 'blanca', name: 'Esencial Blanca', price: 29, img: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=600&q=80' },
+      { id: 'negra',  name: 'Esencial Negra',  price: 29, img: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=600&q=80' },
+      { id: 'arena',  name: 'Arena Tierra',    price: 32, img: 'https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=600&q=80' },
+      { id: 'piedra', name: 'Gris Piedra',     price: 32, img: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=600&q=80' },
     ];
 
-    document.getElementById('benefits-grid').innerHTML = benefits.map(b => `
-      <div class="bg-white rounded-2xl p-7 border border-stone">
+    const sizes = ['S', 'M', 'L', 'XL'];
+
+    const faqs = [
+      { q: '¿De qué material están hechas?', a: '100% algodón orgánico certificado GOTS, de fibra larga para mayor resistencia y suavidad.' },
+      { q: '¿Cuánto tarda el envío?', a: 'Entre 24 y 48 horas en península. Gratis a partir de 50€.' },
+      { q: '¿Puedo devolverla si no me convence?', a: 'Sí, dispones de 30 días para devolverla sin coste y sin preguntas.' },
+      { q: '¿Encogen al lavarlas?', a: 'No. Están pre-lavadas y tratadas para mantener forma y color durante años.' },
+    ];
+
+    const euro = n => n.toLocaleString('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 });
+
+    /* ---------------------------- Render ---------------------------- */
+    document.getElementById('benefits-grid').innerHTML = benefits.map((b, i) => `
+      <div class="bg-white rounded-2xl p-7 border border-stone reveal" data-delay="${i % 3}">
         <div class="text-3xl mb-4">${b.icon}</div>
         <h3 class="font-bold text-lg mb-2">${b.title}</h3>
         <p class="text-neutral-600 text-sm leading-relaxed">${b.text}</p>
       </div>`).join('');
 
-    document.getElementById('catalog-grid').innerHTML = products.map(p => `
-      <div class="group">
+    document.getElementById('catalog-grid').innerHTML = products.map((p, i) => `
+      <div class="group reveal" data-delay="${i % 4}">
         <div class="aspect-[4/5] rounded-2xl bg-stone overflow-hidden mb-4">
           <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
         </div>
-        <div class="flex items-center justify-between">
-          <div>
-            <h3 class="font-semibold">${p.name}</h3>
-            <p class="text-neutral-500 text-sm">${p.price}</p>
-          </div>
-          <button class="bg-ink text-white text-sm px-4 py-2 rounded-full hover:bg-neutral-800 transition" onclick="alert('Añadido: ${p.name}')">Comprar</button>
+        <h3 class="font-semibold">${p.name}</h3>
+        <p class="text-neutral-500 text-sm mb-3">${euro(p.price)}</p>
+        <div class="flex gap-1.5 mb-3" role="group" aria-label="Talla">
+          ${sizes.map((s, j) => `
+            <button data-size="${s}" onclick="selectSize('${p.id}', this)"
+              class="w-9 h-9 rounded-lg border text-sm font-medium transition ${j === 1 ? 'border-ink bg-ink text-white' : 'border-stone hover:border-ink'}">${s}</button>`).join('')}
         </div>
+        <button onclick="Cart.add('${p.id}')" class="w-full bg-ink text-white text-sm py-2.5 rounded-full hover:bg-neutral-800 transition">Añadir al carrito</button>
       </div>`).join('');
+
+    document.getElementById('faq-list').innerHTML = faqs.map(f => `
+      <details class="group py-5">
+        <summary class="flex justify-between items-center cursor-pointer font-semibold list-none">
+          ${f.q}
+          <svg class="w-5 h-5 text-neutral-400 transition group-open:rotate-45" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>
+        </summary>
+        <p class="text-neutral-600 mt-3 text-sm leading-relaxed">${f.a}</p>
+      </details>`).join('');
+
+    /* Talla seleccionada por producto (default M) */
+    const selectedSizes = Object.fromEntries(products.map(p => [p.id, 'M']));
+    function selectSize(id, btn) {
+      selectedSizes[id] = btn.dataset.size;
+      btn.parentElement.querySelectorAll('button').forEach(b => {
+        const on = b === btn;
+        b.className = `w-9 h-9 rounded-lg border text-sm font-medium transition ${on ? 'border-ink bg-ink text-white' : 'border-stone hover:border-ink'}`;
+      });
+    }
+
+    /* ---------------------------- Carrito ---------------------------- */
+    const Cart = {
+      items: JSON.parse(localStorage.getItem('nordik-cart') || '[]'),
+      save() { localStorage.setItem('nordik-cart', JSON.stringify(this.items)); this.render(); },
+      add(id) {
+        const p = products.find(x => x.id === id);
+        const size = selectedSizes[id];
+        const found = this.items.find(x => x.id === id && x.size === size);
+        found ? found.qty++ : this.items.push({ id, size, qty: 1, name: p.name, price: p.price, img: p.img });
+        this.save();
+        toast(`${p.name} (${size}) añadida`);
+      },
+      changeQty(idx, delta) {
+        this.items[idx].qty += delta;
+        if (this.items[idx].qty <= 0) this.items.splice(idx, 1);
+        this.save();
+      },
+      total() { return this.items.reduce((s, x) => s + x.price * x.qty, 0); },
+      count() { return this.items.reduce((s, x) => s + x.qty, 0); },
+      open() { const o = document.getElementById('cart-overlay'); o.classList.remove('hidden'); requestAnimationFrame(() => document.getElementById('cart-panel').classList.remove('translate-x-full')); document.body.style.overflow = 'hidden'; },
+      close() { document.getElementById('cart-panel').classList.add('translate-x-full'); document.body.style.overflow = ''; setTimeout(() => document.getElementById('cart-overlay').classList.add('hidden'), 300); },
+      checkout() { this.items.length ? toast('Demo: aquí conectarías tu pasarela de pago 💳') : toast('Tu carrito está vacío'); },
+      render() {
+        const badge = document.getElementById('cart-count');
+        badge.textContent = this.count();
+        badge.classList.toggle('scale-0', this.count() === 0);
+        document.getElementById('cart-total').textContent = euro(this.total());
+        const box = document.getElementById('cart-items');
+        box.innerHTML = this.items.length ? this.items.map((x, i) => `
+          <div class="flex gap-4">
+            <img src="${x.img}" alt="${x.name}" class="w-16 h-20 object-cover rounded-lg bg-stone" />
+            <div class="flex-1">
+              <p class="font-semibold text-sm">${x.name}</p>
+              <p class="text-neutral-500 text-xs mb-2">Talla ${x.size} · ${euro(x.price)}</p>
+              <div class="inline-flex items-center border border-stone rounded-full">
+                <button onclick="Cart.changeQty(${i}, -1)" class="w-7 h-7 grid place-items-center hover:bg-sand rounded-full">−</button>
+                <span class="w-7 text-center text-sm">${x.qty}</span>
+                <button onclick="Cart.changeQty(${i}, 1)" class="w-7 h-7 grid place-items-center hover:bg-sand rounded-full">+</button>
+              </div>
+            </div>
+            <p class="font-semibold text-sm">${euro(x.price * x.qty)}</p>
+          </div>`).join('')
+          : '<p class="text-neutral-400 text-sm text-center mt-12">Tu carrito está vacío.</p>';
+      },
+    };
+    Cart.render();
+
+    /* ---------------------------- UI helpers ---------------------------- */
+    function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
+
+    function subscribe(e) { e.preventDefault(); e.target.reset(); toast('¡Listo! Revisa tu email para el 10% 🎉'); }
+
+    function toast(msg) {
+      const el = document.createElement('div');
+      el.className = 'bg-ink text-white text-sm px-5 py-3 rounded-full shadow-lg opacity-0 translate-y-2 transition-all duration-300';
+      el.textContent = msg;
+      document.getElementById('toasts').appendChild(el);
+      requestAnimationFrame(() => el.classList.remove('opacity-0', 'translate-y-2'));
+      setTimeout(() => { el.classList.add('opacity-0', 'translate-y-2'); setTimeout(() => el.remove(), 300); }, 2600);
+    }
+
+    /* Reveal on scroll */
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    /* Botón volver arriba + cerrar con Escape */
+    addEventListener('scroll', () => {
+      const b = document.getElementById('to-top');
+      const show = scrollY > 600;
+      b.classList.toggle('opacity-0', !show);
+      b.classList.toggle('pointer-events-none', !show);
+    });
+    addEventListener('keydown', e => { if (e.key === 'Escape') Cart.close(); });
   </script>
 </body>
 </html>
